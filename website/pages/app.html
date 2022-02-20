@@ -1,0 +1,74 @@
+<div>
+  <div
+    style="
+      padding: 15px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      background-color: #1976d2;
+      color: #ffffff;
+    "
+  >
+  
+  </div>
+  <!-- The user's balance if any -->
+  <div
+    style="
+      padding: 15px;
+      text-align: right;
+      font-size: 12px;
+      font-weight: 400;
+      background-color: #78909c;
+      color: #ffffff;
+    "
+    ng-if="core.user_balance || core.user_cart.length>0"
+  >
+    <div style="white-space: nowrap">
+      <span
+        >Balance:
+        {{core.user_balance/100|number:2}}&nbsp;{{core.currency_code}}</span
+      >
+      <span
+        >Cart Total:
+        {{core.user_cart.total_in_cents/100|number:2}}&nbsp;{{core.currency_code}}</span
+      >
+      <!-- Loads cart icon with bade, displays cart quantity -->
+      <div
+        class="badge"
+        style="display: inline-block"
+        data-badge="{{core.user_cart.items.length}}"
+        ng-if="core.page !== 'cart'"
+      >
+        <img
+          ng-click="main.onCartIconClick()"
+          ng-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_-MSHBRa5Vcl1ubGT54a6krNxhlfRCuKKjA&usqp=CAU"
+          style="
+            width: 25px;
+            height: 25px;
+            margin-left: 10px;
+            display: inline-block;
+            cursor: pointer;
+          "
+        />
+      </div>
+      <!-- If core.page is set to 'cart' then this icon will appear to bring you back to the gift cards page-->
+      <div
+        ng-if="core.page === 'cart'"
+        ng-click="main.onGiftCardsTitleClick()"
+        style="margin-left: 10px; display: inline-block; cursor: pointer"
+      >
+        Gift Cards
+      </div>
+    </div>
+  </div>
+  <!-- Loads the right directive based on the page to display -->
+
+  <!-- Index page, the default, asking the user to select the currency to use -->
+  <div app-index ng-if="core.page=='index'"></div>
+
+  <!-- The giftcard page, listing the available giftcards -->
+  <div app-giftcards ng-if="core.page=='giftcards'"></div>
+
+  <!-- The cart page, listing items in the cart -->
+  <div app-cart ng-if="core.page=='cart'"></div>
+</div>

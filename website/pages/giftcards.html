@@ -1,0 +1,135 @@
+<div>
+  <div ng-if="main.loading" style="text-align: center; padding: 50px 20px">
+    Loading... Please wait...
+  </div>
+  <div ng-if="!main.loading">
+    <div style="display: grid; grid-template-columns: repeat(2, 2fr)">
+      <ul class="brands">
+        <li
+          ng-repeat="brand in main.brands track by brand.brand_code"
+          ng-class="{'selected': brand.brand_code === main.selected_brand.brand_code}"
+          ng-click="main.onBrandSelect(brand)"
+        >
+          <span>{{brand.name}}</span>
+
+          <img ng-src="{{brand.image_url}}" style="width: 60px; height: 60px" />
+        </li>
+      </ul>
+      <div
+        ng-if="!main.selected_brand"
+        style="text-align: center; font-size: 40px"
+      >
+        Select a gift card to get started!
+      </div>
+      <div
+        ng-if="main.selected_brand"
+        style="
+          display: grid;
+          grid-template-columns: auto auto auto;
+          padding: 10px;
+        "
+      >
+        <div style="display: grid; grid-template-columns: repeat(1fr, 2fr)">
+          <div>
+            <img ng-src="{{main.selected_brand.image_url}}" />
+            <div
+              ng-if="main.selected_brand.variable_price"
+              style="font-size: 12px"
+            >
+              <div>
+                Minimum
+                balance:&nbsp;{{main.selected_brand.min_price_in_cents/100|number:2}}&nbsp;{{main.selected_brand.fund_currencyisocode}}&nbsp;
+              </div>
+              <div>
+                Maximum
+                balance:&nbsp;{{main.selected_brand.max_price_in_cents/100|number:2}}&nbsp;{{main.selected_brand.fund_currencyisocode}}
+              </div>
+            </div>
+            <div
+              ng-if="main.error.is_error"
+              style="font-size: 12px; color: red"
+            >
+              {{main.error.message}}
+            </div>
+            <div
+              ng-if="main.success.is_success"
+              style="font-size: 12px; color: green"
+            >
+              {{main.success.message}}
+            </div>
+            <div>
+              <select
+                ng-if="!main.selected_brand.variable_price"
+                id="balanceSelect"
+                name="balanceSelect"
+                ng-click="main.onBrandBalanceChange($event.target.value)"
+                style="width: 50%"
+              >
+                <option>Available balances</option>
+                <option
+                  ng-repeat="allowed_price_in_cents in main.selected_brand.allowed_prices_in_cents track by $index"
+                  value="{{allowed_price_in_cents/100|number:2}}"
+                >
+                  {{allowed_price_in_cents/100|number:2}}&nbsp;{{main.selected_brand.fund_currencyisocode}}
+                </option>
+              </select>
+
+              <input
+                ng-if="main.selected_brand.variable_price"
+                style="width: 30%"
+                ng-if="main.selected_brand.variable_price"
+                type="number"
+                ng-model="value"
+                placeholder="USD"
+                ng-change="main.onBrandBalanceChange(value)"
+              />
+              <button
+                ng-click="main.onAddToCart()"
+                style="background: #1976d2; color: #ffffff; border-radius: 10px"
+              >
+                Add to cart
+              </button>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 10px; font-size: 12px">
+          <div style="padding: 10px"><h2>{{main.selected_brand.name}}</h2></div>
+
+          <div style="padding: 10px">
+            Code: {{main.selected_brand.brand_code}}
+          </div>
+
+          <div style="padding: 10px">{{main.selected_brand.description}}</div>
+          <div ng-if="main.selected_brand.disclaimer" style="padding: 10px">
+            <div>DISCLAIMER</div>
+            <div>{{main.selected_brand.disclaimer}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <table class="index-form">
+      <tbody>
+        <tr>
+          <td>Cart Total:</td>
+          <td>
+            {{core.user_cart.total_in_cents/100|number:2}}&nbsp;{{core.currency_code}}
+          </td>
+        </tr>
+        <tr>
+          <td>Email:</td>
+          <td>{{core.user_email}}</td>
+        </tr>
+        <tr>
+          <td>Currency:</td>
+          <td>{{core.currency_code}}</td>
+        </tr>
+        <tr>
+          <td>Available Balance:</td>
+          <td>
+            {{core.user_balance/100|number:2}}&nbsp;{{core.currency_code}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

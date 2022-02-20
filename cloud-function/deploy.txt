@@ -1,0 +1,1 @@
+gcloud beta functions deploy YOUR_FUNCTION_NAME --runtime nodejs8 --entry-point main --region us-east1 --project PROJECT_NAME --trigger-http

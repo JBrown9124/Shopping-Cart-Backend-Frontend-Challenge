@@ -1,0 +1,45 @@
+<div>
+  <div ng-if="main.loading" style="text-align: center; padding: 50px 20px">
+    Loading... Please wait...
+  </div>
+  <div ng-if="!main.loading" style="text-align: center; padding: 50px 20px">
+    <table class="index-form">
+      <tbody>
+        <tr>
+          <td>Email:</td>
+          <td>
+            <input
+              type="email"
+              ng-model="main.user_email"
+              placeholder="Your Email"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Currency:</td>
+          <td>
+            <select ng-model="main.selected_currency_code">
+              <option value="">Select one</option>
+              <option
+                ng-repeat="currency_code in main.currency_codes"
+                value="{{currency_code}}"
+              >
+                {{currency_code}}
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: center">
+            <button
+              ng-click="main.onBrowse()"
+              ng-if="main.selected_currency_code && main.user_email"
+            >
+              Browse {{main.selected_currency_code}} giftcards.
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

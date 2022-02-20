@@ -1,0 +1,23 @@
+{
+    "name": "cloud-function",
+    "description": "Cloud functions API template",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "body-parser": "latest",
+        "busboy": "latest",
+        "cors": "latest",
+        "express": "latest",
+        "fs-tool": "latest",
+        "jssha": "latest",
+        "knex": "latest",
+        "mysql": "latest",
+        "pstack": "latest",
+        "request": "latest",
+        "sha1": "^1.1.1",
+        "underscore": "latest",
+        "validator": "^13.0.0"
+    },
+    "devDependencies": {},
+    "scripts": {}
+}

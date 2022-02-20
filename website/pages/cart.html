@@ -1,0 +1,69 @@
+<div style="justify-content: center; text-align: center; margin: auto">
+  <div ng-if="main.loading" style="text-align: center; padding: 50px 20px">
+    Loading... Please wait...
+  </div>
+  <div  ng-if="!main.loading" style="display: grid; grid-template-columns: repeat(2, 2fr)">
+    <div>
+      <h1> Cart </h1>
+      <ul style="height: 500px; overflow-y: scroll;">
+        <li
+          ng-repeat="cart_item in core.user_cart.items track by $index"
+          ng-click="main.onBrandSelect(brand)"
+          style="list-style-type: none"
+        >
+        <div style="padding: 10px;">
+          <div>{{cart_item.brand_code}}</div>
+          <div>
+            {{cart_item.value/100|number:2}}&nbsp;{{cart_item.currency_code}}
+          </div>
+          <div>{{cart_item.description}}</div>
+          <div>
+            <img
+              ng-src="{{cart_item.image_url}}"
+              style="width: 40px; height: 40px"
+            />
+          </div>
+          <div>
+            <button ng-click="main.onRemoveFromCart(cart_item)" style="background:red; color:black; border-radius:10px;">Remove</button>
+          </div>
+        </div>
+        </li>
+      </ul>
+      <div>
+        Cart total
+        {{core.user_cart.total_in_cents/100|number:2}}&nbsp;{{core.currency_code}}
+      </div>
+      <div ng-if="main.success.is_success" style="color:green;">{{main.success.message}}</div>
+      <div ng-if="main.error.is_error" style="color:red;">{{main.error.message}}</div>
+      <button ng-click="main.onCheckOut()" ng-if="!main.processing_purchase" style="background:#1976d2; color:#ffffff; border-radius:10px;">Check out</button>
+      <div ng-if="main.processing_purchase"> processing...</div>
+    </div>
+    <div>
+      <h1>
+      Purchase history</h1>
+      <ul style="height: 500px; overflow-y: scroll;">
+        <li
+          ng-repeat="purchase in core.user_purchase_history track by $index""
+          ng-click="main.onBrandSelect(brand)"
+          style="list-style-type: none;"
+        >
+          <h2>{{purchase.date}}</h2>
+          <ul >
+            <li ng-repeat="purchase_item in purchase.items track by $index" style="list-style-type: none;">
+            <div style="padding:10px;">
+            <div>Code:&nbsp;{{purchase_item.brand_code}}</div>
+            <div>
+              {{purchase_item.value/100|number:2}}&nbsp;{{purchase_item.currency_code}}
+            </div>
+            <div>Gift Card Code:&nbsp;{{purchase_item.giftcard_code}}</div>
+            <div>Booking ID:&nbsp;{{purchase_item.booking_id}}</div>
+            <div>Status:&nbsp;{{purchase_item.status}}</div>
+            <div>Quantity:&nbsp;{{purchase_item.quantity}}</div>
+            </div>
+          </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
