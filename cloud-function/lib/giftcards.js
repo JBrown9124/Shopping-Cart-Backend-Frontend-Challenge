@@ -6,7 +6,6 @@ var validator	= require('validator');
 Giftcards = function(core, params, req, res) {
 	var lib = {};
 	lib = {
-		api_key:	'f72fdf6c3f735191b25fadf4425aef4b',
 		
 		// Get the brand list for a given curency code
 		brands: function(callback) {
